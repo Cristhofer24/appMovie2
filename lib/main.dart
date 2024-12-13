@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app2/Screens/inicioSesion.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screens/inicioSesion.dart';
+import 'screens/registro.dart';
+import 'screens/apiMovie.dart';
+import 'screens/multimedia.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Asegura la inicialización correcta
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -15,22 +19,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: body(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const InicioSesionScreen(), // Pantalla inicial
+        '/registro': (context) => const RegistroScreen(),
+        '/movieApp': (context) => const ApiMovie(),
+        '/multimedia': (context) => const Pantalla2(),
+      },
     );
   }
 }
-
-class body extends StatelessWidget {
-  const body({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: InicioSesionScreen()
-    );
-  }
-}
-

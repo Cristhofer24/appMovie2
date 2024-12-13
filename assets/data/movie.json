@@ -1,0 +1,41 @@
+{
+    "movies": [
+      {
+        "id": 1,
+        "title": "Ejemplo de Película 1",
+        "description": "Una emocionante aventura para toda la familia.",
+        "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/fairytale-old-vintage-book-cover-template-design-5ff0b48b07be66f694dcd67101cefa12.webp?ts=1698539848",
+        "video_url": "https://www.youtube.com/watch?v=EOnSh3QlpbQ&ab_channel=RammsteinOfficial",
+        "category": "Aventura",
+        "rating": 4.5,
+        "release_year": 2023,
+        "duration": "2h 15min",
+        "actors": ["Actor 1", "Actor 2", "Actor 3"]
+      },
+      {
+        "id": 2,
+        "title": "Ejemplo de Película 2",
+        "description": "Un drama conmovedor que toca el corazón.",
+        "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/cat-book-cover-design-template-621e8ade895070312b4c1449a90cd0a5.jpg?ts=1637017314",
+        "video_url": "https://www.youtube.com/watch?v=skl6N3zGv-s&ab_channel=RammsteinOfficial",
+        "category": "Drama",
+        "rating": 4.8,
+        "release_year": 2022,
+        "duration": "1h 50min",
+        "actors": ["Actor A", "Actor B", "Actor C"]
+      },
+      {
+        "id": 3,
+        "title": "Ejemplo de Película 3",
+        "description": "Acción explosiva y efectos especiales impactantes.",
+        "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/fairy-fiction-gold-woman-book-cover-template-design-ad3fb54ade2edab814993b8f00f2c5c7.jpg?ts=1637015206",
+        "video_url": "https://www.youtube.com/watch?v=ONj9cvHCado&ab_channel=RammsteinOfficial",
+        "category": "Acción",
+        "rating": 4.7,
+        "release_year": 2024,
+        "duration": "2h 30min",
+        "actors": ["Actor X", "Actor Y", "Actor Z"]
+      }
+    ]
+  }
+  
