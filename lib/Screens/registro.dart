@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movie_app2/Screens/inicioSesion.dart';
 
 class RegistroScreen extends StatelessWidget {
   const RegistroScreen({super.key});
@@ -39,6 +40,7 @@ class RegistroScreen extends StatelessWidget {
                       fontSize: 16,
                     ),
               ),
+
               const SizedBox(height: 30),
               // Campos de texto
               TextField(
@@ -52,56 +54,13 @@ class RegistroScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Correo Electrónico',
-                  hintText: 'Ingresa tu correo',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  prefixIcon: const Icon(Icons.email),
-                ),
-              ),
+              input_email(),
+
               const SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Contraseña',
-                  hintText: 'Ingresa una contraseña',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  prefixIcon: const Icon(Icons.lock),
-                ),
-              ),
+              input_password(),
               const SizedBox(height: 30),
               // Botón de registro centrado
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Acción al registrarse
-                    print('Registrarse presionado');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 80,
-                      vertical: 15,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text(
-                    'Registrarse',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              btn_registro(context),
             ],
           ),
         ),
@@ -110,20 +69,98 @@ class RegistroScreen extends StatelessWidget {
   }
 }
 
-Future<void> registro(emailAddress, password) async {
-  try {
-  // ignore: unused_local_variable
-  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    email: emailAddress,
-    password: password,
+TextEditingController email = TextEditingController();
+TextEditingController password = TextEditingController();
+
+Widget input_email() {
+  return TextField(
+    controller: email,
+    decoration: InputDecoration(
+      labelText: 'Correo Electrónico',
+      hintText: 'Ingresa tu correo',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      prefixIcon: const Icon(Icons.email),
+    ),
   );
-} on FirebaseAuthException catch (e) {
-  if (e.code == 'weak-password') {
-    print('The password provided is too weak.');
-  } else if (e.code == 'email-already-in-use') {
-    print('The account already exists for that email.');
-  }
-} catch (e) {
-  print(e);
 }
+
+Widget input_password() {
+  return TextField(
+    controller: password,
+    obscureText: true,
+    decoration: InputDecoration(
+      labelText: 'Ingresa una contraseña',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      prefixIcon: const Icon(Icons.lock),
+    ),
+  );
+}
+
+Widget btn_registro(context) {
+  return FilledButton(
+      onPressed: () {
+        // Acción al registrarse
+        print('Registrarse presionado');
+        registro(email.text, password.text,context);
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Colors.blueAccent),
+        padding: MaterialStatePropertyAll(const EdgeInsets.symmetric(
+          horizontal: 88,
+          vertical: 15,
+        )),
+      ),
+      child: const Text(
+        'Registrarse',
+        style: TextStyle(
+          fontSize: 18,
+          color: Colors.white,
+        ),
+      ));
+}
+
+void SuccesMessage(context){
+    showDialog(context: context, builder: (context) {
+    return AlertDialog(
+      title: Text("Registro"),
+      content: Text("Su registro se ha completado con exito"),
+      
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> InicioSesionScreen()));
+            },
+            child: Text("Aceptar"),
+          ),
+        ],
+    );
+    //boton aceptar para cerrar el cuadro de dialogo
+  } );
+}
+
+
+
+Future<void> registro(emailAddress, password,context) async {
+  try {
+    // ignore: unused_local_variable
+    final credential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailAddress,
+      password: password,
+    );
+    SuccesMessage(context);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'weak-password') {
+      print('The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      print('The account already exists for that email.');
+    }
+  } catch (e) {
+    print(e);
+  }
 }
