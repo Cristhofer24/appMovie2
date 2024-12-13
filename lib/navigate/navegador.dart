@@ -18,7 +18,7 @@ class Navegador extends StatelessWidget {
         '/inicioSesion': (context) => const InicioSesionScreen(),
         '/registro': (context) => const RegistroScreen(),
         '/movieApp': (context) => const ApiMovie(), // Ruta añadida para ApiMovie
-        '/pantalla2': (context) => const Multimedia(),
+        '/multimedia': (context) => const Multimedia(),
       },
     );
   }
