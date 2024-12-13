@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:movie_app2/Screens/multimedia.dart';
 import 'firebase_options.dart';
 import 'screens/inicioSesion.dart';
 import 'screens/registro.dart';
 import 'screens/apiMovie.dart';
-import 'screens/multimedia.dart';
+//import 'screens/multimedia.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Asegura la inicialización correcta
@@ -26,7 +27,7 @@ class MainApp extends StatelessWidget {
         '/': (context) => const InicioSesionScreen(), // Pantalla inicial
         '/registro': (context) => const RegistroScreen(),
         '/movieApp': (context) => const ApiMovie(),
-        '/multimedia': (context) => const Pantalla2(),
+        '/multimedia': (context) => const Multimedia(),
       },
     );
   }
