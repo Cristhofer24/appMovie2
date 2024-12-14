@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app2/Screens/apiMovie.dart';
 import 'package:movie_app2/Screens/registro.dart';
 
 class InicioSesionScreen extends StatelessWidget {
@@ -115,7 +116,7 @@ void SuccesMessage(context) {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> InicioSesionScreen()));
+                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ApiMovie()));
               },
               child: Text("Aceptar"),
             ),
