@@ -16,3 +16,27 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.example.appMovie2"  // Ajusta este nombre con tu ID de paquete
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    namespace 'com.example.appMovie2'  // Agrega esta línea
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.0'  // Actualiza a la versión más reciente
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10'
+    }
+}
