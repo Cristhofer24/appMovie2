@@ -116,7 +116,8 @@ void SuccesMessage(context) {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ApiMovie()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ApiMovie()));
+         
               },
               child: Text("Aceptar"),
             ),
@@ -128,6 +129,7 @@ void SuccesMessage(context) {
 
 Future<void> login(emailAddress, password, context) async {
 try {
+  // ignore: unused_local_variable
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: emailAddress,
     password: password
