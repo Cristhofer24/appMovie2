@@ -27,6 +27,8 @@ class ApiMovie extends StatelessWidget {
     }
   }
 
+  
+
   Widget listViewLocal(context) {
     return FutureBuilder(
       future: jsonLocal(context),
