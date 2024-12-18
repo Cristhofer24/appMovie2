@@ -20,21 +20,22 @@ class _MultimediaState extends State<Multimedia> {
     super.didChangeDependencies();
 
     // Obtiene el argumento pasado por Navigator.pushNamed
+    //final videoUrl = ModalRoute.of(context)!.settings.arguments as String;
     final videoUrl = ModalRoute.of(context)!.settings.arguments as String;
-
+    print("URL del video: $videoUrl");
     // Inicializa el controlador solo si aún no está inicializado
     if (!_isInitialized) {
-      _controller = VideoPlayerController.network(videoUrl)
-        ..initialize().then((_) {
-          setState(() {
-            _isInitialized = true; // Marcar que el controlador está inicializado
-          });
-        })
-        ..addListener(() {
-          setState(() {
-            _seekValue = _controller.value.position.inSeconds.toDouble();
-          });
-        });
+    _controller = VideoPlayerController.network(videoUrl)
+  ..initialize().then((_) {
+    setState(() {
+      _isInitialized = true;
+    });
+  }).catchError((error) {
+    print("Error al inicializar el video: $error");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("No se pudo cargar el video")),
+    );
+  });
     }
   }
 
