@@ -27,6 +27,10 @@ class MainApp extends StatelessWidget {
         '/registro': (context) => const RegistroScreen(),
         '/movieApp': (context) => const ApiMovie(),
         '/multimedia': (context) => const Multimedia(), // Pantalla multimedia
+      // '/multimedia': (context) {
+      //   final args = ModalRoute.of(context)!.settings.arguments as String;
+      //   return Multimedia(videoUrl: args);
+      //   },
       },
     );
   }

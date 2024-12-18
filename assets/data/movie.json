@@ -5,7 +5,7 @@
         "title": "Ejemplo de Película 1",
         "description": "Una emocionante aventura para toda la familia.",
         "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/fairytale-old-vintage-book-cover-template-design-5ff0b48b07be66f694dcd67101cefa12.webp?ts=1698539848",
-        "video_url": "https://www.youtube.com/watch?v=EOnSh3QlpbQ&ab_channel=RammsteinOfficial",
+        "video_url": "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
         "category": "Aventura",
         "rating": 4.5,
         "release_year": 2023,

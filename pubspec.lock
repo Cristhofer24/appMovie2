@@ -144,6 +144,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_plugin:
+    dependency: "direct dev"
+    description:
+      name: flutter_webview_plugin
+      sha256: ec410b10822b06432e11f9680b319609d6f34bcdabb31fcc4990ac8a2aaf9ff0
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -374,7 +382,11 @@ packages:
     source: hosted
     version: "1.1.0"
   youtube_player_flutter:
+<<<<<<< HEAD
     dependency: "direct main"
+=======
+    dependency: "direct dev"
+>>>>>>> d14968e9d307e27cb2be98690cbd13d98d2778e0
     description:
       name: youtube_player_flutter
       sha256: "72d487e1a1b9155a2dc9d448c137380791101a0ff623723195275ac275ac6942"
