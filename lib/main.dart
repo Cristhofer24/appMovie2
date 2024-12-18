@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:movie_app2/Screens/multimedia.dart';
-import 'package:video_player/video_player.dart';
 import 'firebase_options.dart';
 import 'screens/inicioSesion.dart';
 import 'screens/registro.dart';

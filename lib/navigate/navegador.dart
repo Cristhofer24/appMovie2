@@ -18,11 +18,11 @@ class Navegador extends StatelessWidget {
         '/inicioSesion': (context) => const InicioSesionScreen(),
         '/registro': (context) => const RegistroScreen(),
         '/movieApp': (context) => const ApiMovie(), // Ruta añadida para ApiMovie
-        //'/multimedia': (context) => const Multimedia(),
-        '/multimedia': (context) {
-        final args = ModalRoute.of(context)!.settings.arguments as String;
-        return Multimedia(videoUrl: args);
-},
+        '/multimedia': (context) => const Multimedia(),
+        // '/multimedia': (context) {
+        // final args = ModalRoute.of(context)!.settings.arguments as String;
+        // return Multimedia(videoUrl: args);
+        // },
       },
     );
   }

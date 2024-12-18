@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app2/Screens/registro.dart';
 import 'package:movie_app2/screens/apiMovie.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InicioSesionScreen extends StatelessWidget {
   const InicioSesionScreen({super.key});
@@ -11,24 +13,51 @@ class InicioSesionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Iniciar Sesión'),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 15, 14, 14),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            input_email(),
-            const SizedBox(height: 20),
-            input_password(),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: btn_inicioSesion(context),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: imagen_fondo(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Bienvenido a Movie",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10,
+                        color: Colors.black.withOpacity(0.5),
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                input_email(),
+                const SizedBox(height: 15),
+                input_password(),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: btn_inicioSesion(context),
+                ),
+                const SizedBox(height: 15),
+                btn_Registro(context),
+              ],
             ),
-            btn_Registro(context)
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -38,108 +67,171 @@ TextEditingController email = TextEditingController();
 TextEditingController password = TextEditingController();
 
 Widget input_email() {
-  return TextField(
+  return CupertinoTextField(
     controller: email,
-    decoration: InputDecoration(
-      labelText: 'Correo Electrónico',
-      hintText: 'Ingresa tu correo',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      prefixIcon: const Icon(Icons.email),
+    placeholder: 'Ingresa tu correo',
+    prefix: Padding(
+      padding: const EdgeInsets.all(10),
+      child: FaIcon(FontAwesomeIcons.envelope, color: Colors.white),
     ),
+    style: TextStyle(color: Colors.white),
+    cursorColor: Colors.white,
+    decoration: BoxDecoration(
+      color: Colors.black.withOpacity(0.3),
+      borderRadius: BorderRadius.circular(15),
+      border: Border.all(color: Colors.white.withOpacity(0.6)),
+    ),
+    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   );
 }
 
 Widget input_password() {
-  return TextField(
+  return CupertinoTextField(
     controller: password,
     obscureText: true,
-    decoration: InputDecoration(
-      labelText: 'Ingresa una contraseña',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      prefixIcon: const Icon(Icons.lock),
+    placeholder: 'Contraseña',
+    prefix: Padding(
+      padding: const EdgeInsets.all(10),
+      child: FaIcon(FontAwesomeIcons.lock, color: Colors.white),
     ),
+    style: TextStyle(color: Colors.white),
+    cursorColor: Colors.white,
+    decoration: BoxDecoration(
+      color: const Color.fromARGB(255, 12, 12, 12).withOpacity(0.3),
+      borderRadius: BorderRadius.circular(15),
+      border: Border.all(color: Colors.white.withOpacity(0.6)),
+    ),
+    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   );
 }
 
 Widget btn_inicioSesion(context) {
-
-  return FilledButton(
-    onPressed: () => {
-      print('Iniciar Sesión presionado'),
-      login(email.text, password.text, context)
-    },
-
-    child: Text(
-      "Iniciar Sesión",
-      style: TextStyle(fontSize: 18),
-    ),
-    style: ButtonStyle(
-      backgroundColor:
-          WidgetStatePropertyAll(const Color.fromARGB(255, 18, 99, 220)),
-      padding: MaterialStatePropertyAll(
-          const EdgeInsets.symmetric(horizontal: 80, vertical: 15)),
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+    child: ElevatedButton(
+      onPressed: () => {
+        print('Iniciar Sesión presionado'),
+        login(email.text, password.text, context)
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black,
+        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+        side: BorderSide(color: Colors.white),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        elevation: 5,
+      ),
+      child: Text(
+        "Iniciar Sesión",
+        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
     ),
   );
 }
 
 Widget btn_Registro(context) {
-  return FilledButton(
-    onPressed: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => RegistroScreen()));
-    },
-    child: Text(
-      "Registrate",
-      style: TextStyle(fontSize: 18),
-    ),
-    style: ButtonStyle(
-      backgroundColor:
-          WidgetStatePropertyAll(const Color.fromARGB(255, 33, 99, 221)),
-      padding: MaterialStatePropertyAll(
-          const EdgeInsets.symmetric(horizontal: 88, vertical: 15)),
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+    child: ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RegistroScreen()));
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        padding: const EdgeInsets.symmetric(horizontal: 88, vertical: 15),
+        side: BorderSide(color: Colors.white),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+        elevation: 10,
+      ),
+      child: Text(
+        "Registrate",
+        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
     ),
   );
 }
 
 void SuccesMessage(context) {
   showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Inicio de Sesión"),
-          content: Text("Seison iniciado con exito"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ApiMovie()));
-              },
-              child: Text("Aceptar"),
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          "Inicio de Sesión",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueAccent,
+          ),
+        ),
+        content: Text(
+          "Sesión iniciada con éxito",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black.withOpacity(0.7),
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 10,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => ApiMovie()));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                "Aceptar",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ],
-        );
-        //boton aceptar para cerrar el cuadro de dialogo
-      });
+          ),
+        ],
+      );
+    },
+  );
 }
 
 Future<void> login(emailAddress, password, context) async {
-try {
-  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: emailAddress,
-    password: password
-  );
+  try {
+    final credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: emailAddress, password: password);
 
-  SuccesMessage(context);
-
-} on FirebaseAuthException catch (e) {
-  if (e.code == 'user-not-found') {
-    print('No user found for that email.');
-  } else if (e.code == 'wrong-password') {
-    print('Wrong password provided for that user.');
+    SuccesMessage(context);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
   }
 }
+
+Widget imagen_fondo() {
+  return Image.network(
+    'https://imgs.search.brave.com/jrsX1iAwW-fvl2Xl4U9_fJ5ylO1Ns1WmAGysAIboHW0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90by1ncmF0aXMv/c2ltYm9sb3MtY2lu/ZW1hdG9ncmFmaWEt/c29icmUtZm9uZG8t/bmVncm9fMjMtMjE0/NzY5ODk0Ni5qcGc_/c2VtdD1haXNfaHli/cmlk',
+    fit: BoxFit.cover,
+    width: double.infinity,
+    height: double.infinity,
+    alignment: Alignment.center,
+  );
 }
