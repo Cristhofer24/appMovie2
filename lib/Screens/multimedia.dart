@@ -5,51 +5,46 @@ class Multimedia extends StatefulWidget {
   const Multimedia({super.key});
 
   @override
-  State<Multimedia> createState() => _MultimediaState();
+  _Pantalla2State createState() => _Pantalla2State();
 }
 
-class _MultimediaState extends State<Multimedia> {
+class _Pantalla2State extends State<Multimedia> {
   late VideoPlayerController _controller;
   bool _isPlaying = false;
   double _volume = 1.0;
   double _seekValue = 0.0;
-  bool _isInitialized = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // Obtiene el argumento pasado por Navigator.pushNamed
-    final videoUrl = ModalRoute.of(context)!.settings.arguments as String;
-
-    // Inicializa el controlador solo si aún no está inicializado
-    if (!_isInitialized) {
-      _controller = VideoPlayerController.network(videoUrl)
-        ..initialize().then((_) {
-          setState(() {
-            _isInitialized = true; // Marcar que el controlador está inicializado
-          });
-        })
-        ..addListener(() {
-          setState(() {
-            _seekValue = _controller.value.position.inSeconds.toDouble();
-          });
+  void initState() {
+    super.initState();
+    
+    // Obtener el videoUrl pasado como argumento
+    final String videoUrl = ModalRoute.of(context)!.settings.arguments as String;
+    
+    // Inicializar el controlador de video
+    _controller = VideoPlayerController.network(videoUrl)
+      ..initialize().then((_) {
+        setState(() {}); // Actualiza la UI cuando el video está listo
+      })
+      ..addListener(() {
+        setState(() {
+          _seekValue = _controller.value.position.inSeconds.toDouble();
         });
-    }
+      });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera el controlador al salir
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(234, 2, 4, 67),
+      backgroundColor: Color.fromARGB(234, 2, 4, 67),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 39, 80, 155),
+        backgroundColor: Color.fromARGB(255, 39, 80, 155),
         title: const Text('Reproductor de Video'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -61,7 +56,7 @@ class _MultimediaState extends State<Multimedia> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (_isInitialized)
+          if (_controller.value.isInitialized)
             AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
               child: VideoPlayer(_controller),
@@ -70,8 +65,6 @@ class _MultimediaState extends State<Multimedia> {
             const Center(child: CircularProgressIndicator()),
 
           const SizedBox(height: 20),
-
-          // Controles del reproductor
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -101,68 +94,6 @@ class _MultimediaState extends State<Multimedia> {
                     _isPlaying = false;
                   });
                 },
-              ),
-              IconButton(
-                icon: const Icon(Icons.replay_10, color: Colors.white),
-                onPressed: () {
-                  setState(() {
-                    final position = _controller.value.position;
-                    _controller.seekTo(position - const Duration(seconds: 10));
-                  });
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.forward_10, color: Colors.white),
-                onPressed: () {
-                  setState(() {
-                    final position = _controller.value.position;
-                    _controller.seekTo(position + const Duration(seconds: 10));
-                  });
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Control de volumen
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Volumen', style: TextStyle(color: Colors.white)),
-              Slider(
-                value: _volume,
-                min: 0.0,
-                max: 1.0,
-                onChanged: (value) {
-                  setState(() {
-                    _volume = value;
-                    _controller.setVolume(_volume);
-                  });
-                },
-                activeColor: const Color.fromARGB(255, 113, 39, 155),
-                inactiveColor: Colors.white.withOpacity(0.5),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Barra de progreso
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Progreso', style: TextStyle(color: Colors.white)),
-              Slider(
-                value: _seekValue,
-                min: 0.0,
-                max: _controller.value.duration.inSeconds.toDouble(),
-                onChanged: (value) {
-                  setState(() {
-                    _seekValue = value;
-                    _controller.seekTo(Duration(seconds: value.toInt()));
-                  });
-                },
-                activeColor: const Color.fromARGB(255, 113, 39, 155),
-                inactiveColor: Colors.white.withOpacity(0.5),
               ),
             ],
           ),
