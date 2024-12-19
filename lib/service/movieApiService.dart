@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:http_parser/http_parser.dart' as http;
-import 'package:  http/http.dart' as http;
+//import 'package:http_parser/http_parser.dart' as http;
+import 'package:http/http.dart' as http;
 
 class TMDBService {
   // Tu token de autorización (API Key)

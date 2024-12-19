@@ -35,7 +35,43 @@
         "release_year": 2024,
         "duration": "2h 30min",
         "actors": ["Actor X", "Actor Y", "Actor Z"]
+      },
+      {
+        "id": 4,
+        "title": "Audioslave - Like a Stone",
+        "description": "Video musical oficial de Audioslave.",
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Audioslave_-_Like_a_Stone.jpg/220px-Audioslave_-_Like_a_Stone.jpg",
+        "video_url": "file:///D:/Backup/Videos/Audioslave%20Like%20a%20Stone%20Official%20Video_360p.mp4",
+        "category": "Música",
+        "rating": 4.9,
+        "release_year": 2002,
+        "duration": "4min 56s",
+        "actors": ["Audioslave"]
+      },
+      {
+        "id": 5,
+        "title": "Dead Pool 3",
+        "description": "Video musical oficial de Audioslave.",
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Audioslave_-_Like_a_Stone.jpg/220px-Audioslave_-_Like_a_Stone.jpg",
+        "video_url": "file:///D:/Backup/Videos/seg-1-v1-a1.mp4",
+        "category": "Música",
+        "rating": 4.9,
+        "release_year": 2002,
+        "duration": "4min 56s",
+        "actors": ["Audioslave"]
+      },
+      {
+        "id": 5,
+        "title": "enlase de Cristofer",
+        "description": "Video musical oficial de Audioslave.",
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Audioslave_-_Like_a_Stone.jpg/220px-Audioslave_-_Like_a_Stone.jpg",
+        "video_url": "https://www.dropbox.com/scl/fi/8fi3gohrpg87twn5zwlng/El-predicador-Boxeador-Subtitulado-espa-ol-LDS.mp4?rlkey=315st9f5e1esixngsegn43pg3&e=1&st=lyv29i9j&raw=1",
+        "category": "Música",
+        "rating": 4.9,
+        "release_year": 2002,
+        "duration": "4min 56s",
+        "actors": ["Audioslave"]
       }
     ]
   }
-  
+

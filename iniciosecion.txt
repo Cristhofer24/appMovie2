@@ -57,8 +57,6 @@ class InicioSesionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 btn_Registro(context),
-                const SizedBox(height: 15),
-                btn_apiMovie(context), // Nuevo botón para apiMovie
               ],
             ),
           ),
@@ -164,38 +162,13 @@ Widget btn_Registro(context) {
   );
 }
 
-Widget btn_apiMovie(context) {
-  return ElevatedButton(
-    onPressed: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ApiMovie()));
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue,
-      padding: const EdgeInsets.symmetric(horizontal: 88, vertical: 15),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      elevation: 5,
-    ),
-    child: Text(
-      "Ir a ApiMovie",
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-  );
-}
-
 void SuccesMessage(context) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
             title: Text("Inicio de Sesión"),
-            content: Text("Sesión iniciada con éxito"),
+            content: Text("Seison iniciado con exito"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
