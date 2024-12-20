@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app2/Screens/trailerScreen.dart';
 import 'package:movie_app2/service/movieApiService.dart';
+import 'package:movie_app2/Screens/multimedia.dart';
 
 class PeliculasPopularesScreen2 extends StatefulWidget {
   @override
@@ -40,23 +41,33 @@ class _PeliculasPopularesScreenState extends State<PeliculasPopularesScreen2> {
             itemCount: peliculas.length,
             itemBuilder: (context, index) {
               final pelicula = peliculas[index];
+              final videoUrl = pelicula['video_url'] ?? ''; // Valor predeterminado
+              final title = pelicula['title'] ?? 'Sin título';
+              final releaseDate = pelicula['release_date'] ?? 'Fecha desconocida';
+              final posterPath = pelicula['poster_path'] ?? '';
+
               return ListTile(
-                title: Text(pelicula['title']),
-                subtitle: Text(pelicula['release_date']),
-                leading: Image.network(
-                  'https://image.tmdb.org/t/p/w500${pelicula['poster_path']}',
-                  width: 50,
-                ),
+                title: Text(title),
+                subtitle: Text(releaseDate),
+                leading: posterPath.isNotEmpty
+                    ? Image.network(
+                        'https://image.tmdb.org/t/p/w500$posterPath',
+                        width: 50,
+                      )
+                    : Icon(Icons.image_not_supported),
                 onTap: () {
-                  // Navegar a la pantalla del trailer
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TrailerScreen(
-                        movieId: pelicula['id'],
-                      ),
-                    ),
-                  );
+                  if (videoUrl.isNotEmpty) {
+                    Navigator.pushNamed(
+                      context,
+                      '/multimedia',
+                      arguments: videoUrl,
+                    );
+                  } else {
+                    // Mostrar un SnackBar si no hay video disponible
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('No hay video disponible')),
+                    );
+                  }
                 },
               );
             },

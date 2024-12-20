@@ -1,121 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:movie_app2/Screens/trailerScreen.dart';
+import 'package:movie_app2/service/movieApiService.dart';
+import 'package:movie_app2/Screens/multimedia.dart';
 
-class Multimedia extends StatefulWidget {
-  final String videoUrl;
-
-  const Multimedia({super.key, required this.videoUrl});
-
+class PeliculasPopularesScreen2 extends StatefulWidget {
   @override
-  State<Multimedia> createState() => _MultimediaState();
+  _PeliculasPopularesScreenState createState() =>
+      _PeliculasPopularesScreenState();
 }
 
-class _MultimediaState extends State<Multimedia> {
-  late VideoPlayerController _controller;
-  bool _isPlaying = false;
-  double _seekValue = 0.0; // Para manejar el progreso del slider
+class _PeliculasPopularesScreenState extends State<PeliculasPopularesScreen2> {
+  late Future<List> _peliculas;
 
   @override
   void initState() {
     super.initState();
-
-    // Inicializa el controlador de video
-    _controller = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        setState(() {}); // Actualiza la UI cuando el video esté listo
-        _controller.play(); // Reproduce automáticamente el video
-        _isPlaying = true;
-      }).catchError((error) {
-        print("Error al cargar el video: $error");
-        // Muestra un mensaje si hay un error al cargar el video
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Error al cargar el video. Verifique la URL."),
-          ),
-        );
-      });
-
-    // Listener para manejar el progreso del video
-    _controller.addListener(() {
-      setState(() {
-        _seekValue = _controller.value.position.inSeconds.toDouble();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose(); // Libera los recursos del controlador
-    super.dispose();
-  }
-
-  void _togglePlayPause() {
-    setState(() {
-      if (_controller.value.isPlaying) {
-        _controller.pause();
-        _isPlaying = false;
-      } else {
-        _controller.play();
-        _isPlaying = true;
-      }
-    });
+    _peliculas = TMDBService().obtenerPeliculasPopulares();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Reproductor de Video"),
-        centerTitle: true,
+        title: Text('Películas Populares'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Vista previa del video
-          Center(
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : _controller.value.hasError
-                    ? Text(
-                        "Error al reproducir el video: ${_controller.value.errorDescription}",
-                        style: const TextStyle(color: Colors.red),
-                      )
-                    : const CircularProgressIndicator(),
-          ),
+      body: FutureBuilder<List>(
+        future: _peliculas,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No hay películas para mostrar'));
+          }
 
-          // Barra de progreso y controles
-          if (_controller.value.isInitialized)
-            Column(
-              children: [
-                Slider(
-                  min: 0.0,
-                  max: _controller.value.duration.inSeconds.toDouble(),
-                  value: _seekValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _seekValue = value;
-                      _controller.seekTo(Duration(seconds: value.toInt()));
-                    });
-                  },
+          final peliculas = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: peliculas.length,
+            itemBuilder: (context, index) {
+              final pelicula = peliculas[index];
+              return ListTile(
+                title: Text(pelicula['title']),
+                subtitle: Text(pelicula['release_date']),
+                leading: Image.network(
+                  'https://image.tmdb.org/t/p/w500${pelicula['poster_path']}',
+                  width: 50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
-                      onPressed: _togglePlayPause,
-                    ),
-                    Text(
-                      "${_controller.value.position.inMinutes}:${(_controller.value.position.inSeconds % 60).toString().padLeft(2, '0')} / ${_controller.value.duration.inMinutes}:${(_controller.value.duration.inSeconds % 60).toString().padLeft(2, '0')}",
-                    ),
-                  ],
-                ),
-              ],
-            ),
-        ],
+                // onTap: () {
+                //   // Navegar a la pantalla del trailer
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => TrailerScreen(
+                //         movieId: pelicula['id'],
+                //       ),
+                //     ),
+                //   );
+                // },
+                onTap: () {
+                      // Navegar a la pantalla Multimedia y pasar el enlace del video como argumento
+                      Navigator.pushNamed(
+                        context,
+                        '/multimedia', // Ruta para Multimedia
+                        arguments: item['video_url'], // Pasamos el videoUrl
+                      );
+                    },
+              );
+            },
+          );
+        },
       ),
     );
   }
