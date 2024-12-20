@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:movie_app2/Screens/ScreenMovie2.dart';
 import 'package:movie_app2/Screens/multimedia.dart';
+import 'package:movie_app2/Screens/reproductorYT.dart';
 import 'firebase_options.dart';
 import 'screens/inicioSesion.dart';
 import 'screens/registro.dart';
@@ -23,10 +25,10 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const InicioSesionScreen(), // Pantalla inicial
+        '/': (context) =>  PeliculasPopularesScreen2(), // Pantalla inicial
         '/registro': (context) => const RegistroScreen(),
         '/movieApp': (context) => const ApiMovie(),
-        '/multimedia': (context) => const Multimedia(), // Pantalla multimedia
+        '/multimedia': (context) => const Multimedia(), 
       // '/multimedia': (context) {
       //   final args = ModalRoute.of(context)!.settings.arguments as String;
       //   return Multimedia(videoUrl: args);

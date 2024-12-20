@@ -10,12 +10,13 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(":app")
+      project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
 android {
     compileSdkVersion 33
 
@@ -36,7 +37,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'  // Actualiza a la versión más reciente
+        classpath 'com.android.tools.build:gradle:8.4.0'  // Actualiza a la versión más reciente
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10'
     }
 }

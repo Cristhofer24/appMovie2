@@ -15,16 +15,14 @@ class _Pantalla2State extends State<Multimedia> {
   double _seekValue = 0.0;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     
-    // Obtener el videoUrl pasado como argumento
     final String videoUrl = ModalRoute.of(context)!.settings.arguments as String;
     
-    // Inicializar el controlador de video
     _controller = VideoPlayerController.network(videoUrl)
       ..initialize().then((_) {
-        setState(() {}); // Actualiza la UI cuando el video está listo
+        setState(() {});
       })
       ..addListener(() {
         setState(() {
@@ -69,29 +67,31 @@ class _Pantalla2State extends State<Multimedia> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: Icon(
-                  _isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: Colors.white,
-                ),
+                icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
                 onPressed: () {
                   setState(() {
-                    if (_controller.value.isPlaying) {
-                      _controller.pause();
-                      _isPlaying = false;
-                    } else {
-                      _controller.play();
-                      _isPlaying = true;
-                    }
+                    _isPlaying ? _controller.pause() : _controller.play();
+                    _isPlaying = !_isPlaying;
                   });
                 },
               ),
               IconButton(
-                icon: const Icon(Icons.stop, color: Colors.white),
+                icon: Icon(Icons.volume_up),
                 onPressed: () {
                   setState(() {
-                    _controller.pause();
-                    _controller.seekTo(const Duration(seconds: 0));
-                    _isPlaying = false;
+                    _volume = _volume == 1.0 ? 0.0 : 1.0;
+                    _controller.setVolume(_volume);
+                  });
+                },
+              ),
+              Slider(
+                value: _seekValue,
+                min: 0.0,
+                max: _controller.value.duration.inSeconds.toDouble(),
+                onChanged: (value) {
+                  setState(() {
+                    _seekValue = value;
+                    _controller.seekTo(Duration(seconds: value.toInt()));
                   });
                 },
               ),

@@ -49,7 +49,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Solo intentamos reproducir o pausar si el controlador está inicializado
+          // Verificamos si el controlador está listo antes de intentar reproducir o pausar
           if (_controller.value.isInitialized) {
             setState(() {
               if (_controller.value.isPlaying) {
@@ -58,6 +58,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 _controller.play();
               }
             });
+          } else {
+            // Si no está listo, mostramos un mensaje o no hacemos nada
+            print("El controlador no está listo para reproducciones");
           }
         },
         child: Icon(
