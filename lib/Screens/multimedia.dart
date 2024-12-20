@@ -19,38 +19,47 @@ class _MultimediaState extends State<Multimedia> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Obtiene el argumento pasado por Navigator.pushNamed
-    //final videoUrl = ModalRoute.of(context)!.settings.arguments as String;
     final videoUrl = ModalRoute.of(context)!.settings.arguments as String;
-    print("URL del video: $videoUrl");
-    // Inicializa el controlador solo si aún no está inicializado
     if (!_isInitialized) {
-    _controller = VideoPlayerController.network(videoUrl)
-  ..initialize().then((_) {
-    setState(() {
-      _isInitialized = true;
-    });
-  }).catchError((error) {
-    print("Error al inicializar el video: $error");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("No se pudo cargar el video")),
-    );
-  });
+      _controller = VideoPlayerController.network(videoUrl)
+        ..initialize().then((_) {
+          setState(() {
+            _isInitialized = true;
+          });
+        }).catchError((error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("No se pudo cargar el video")),
+          );
+        });
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera el controlador al salir
+    _controller.dispose();
     super.dispose();
+  }
+
+  Widget buildButton({required IconData icon, required VoidCallback onPressed}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.red, width: 2),
+      ),
+      child: IconButton(
+        icon: Icon(icon, color: Colors.red),
+        onPressed: onPressed,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(234, 2, 4, 67),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 39, 80, 155),
+        backgroundColor: Colors.redAccent,
         title: const Text('Reproductor de Video'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -68,7 +77,7 @@ class _MultimediaState extends State<Multimedia> {
               child: VideoPlayer(_controller),
             )
           else
-            const Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator(color: Colors.red)),
 
           const SizedBox(height: 20),
 
@@ -76,11 +85,8 @@ class _MultimediaState extends State<Multimedia> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                icon: Icon(
-                  _isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: Colors.white,
-                ),
+              buildButton(
+                icon: _isPlaying ? Icons.pause : Icons.play_arrow,
                 onPressed: () {
                   setState(() {
                     if (_controller.value.isPlaying) {
@@ -93,8 +99,8 @@ class _MultimediaState extends State<Multimedia> {
                   });
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.stop, color: Colors.white),
+              buildButton(
+                icon: Icons.stop,
                 onPressed: () {
                   setState(() {
                     _controller.pause();
@@ -103,8 +109,8 @@ class _MultimediaState extends State<Multimedia> {
                   });
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.replay_10, color: Colors.white),
+              buildButton(
+                icon: Icons.replay_10,
                 onPressed: () {
                   setState(() {
                     final position = _controller.value.position;
@@ -112,8 +118,8 @@ class _MultimediaState extends State<Multimedia> {
                   });
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.forward_10, color: Colors.white),
+              buildButton(
+                icon: Icons.forward_10,
                 onPressed: () {
                   setState(() {
                     final position = _controller.value.position;
@@ -140,7 +146,7 @@ class _MultimediaState extends State<Multimedia> {
                     _controller.setVolume(_volume);
                   });
                 },
-                activeColor: const Color.fromARGB(255, 113, 39, 155),
+                activeColor: Colors.red,
                 inactiveColor: Colors.white.withOpacity(0.5),
               ),
             ],
@@ -162,7 +168,7 @@ class _MultimediaState extends State<Multimedia> {
                     _controller.seekTo(Duration(seconds: value.toInt()));
                   });
                 },
-                activeColor: const Color.fromARGB(255, 113, 39, 155),
+                activeColor: Colors.red,
                 inactiveColor: Colors.white.withOpacity(0.5),
               ),
             ],
